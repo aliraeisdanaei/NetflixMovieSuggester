@@ -1,6 +1,16 @@
 from bs4 import BeautifulSoup
 import requests
 import random
+import datetime
+
+
+class User:
+    def __init__(self):
+        self.minRunTm = 0
+        self.maxRunTm = 10
+        self.minRlsYr = 1890
+        self.maxRlsYR = datetime.datetime.now().year
+
 
 response = requests.get('https://www.finder.com/ca/netflix-movies')
 
