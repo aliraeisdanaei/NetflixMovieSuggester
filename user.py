@@ -12,6 +12,20 @@ class User:
         self.__maxRlsYr = datetime.datetime.now().year
         self.__rejectedGenres = []
 
+    @classmethod
+    def createUser(cls, name, minRunTm, maxRunTm, minRlsYr, maxRlsYr, rjtGenres):
+        tmpUser = cls()
+        tmpUser.__name = name
+        tmpUser.__fileName = 'users\\' + tmpUser.__name + '.txt'
+        tmpUser.__minRunTm = minRunTm
+        tmpUser.__maxRunTm = maxRunTm
+        tmpUser.__minRlsYr = minRlsYr
+        tmpUser.__maxRlsYr = maxRlsYr
+        tmpUser.__rejectedGenres = rjtGenres.split(',')
+
+        tmpUser.__savePreference()
+        return tmpUser
+
     def __savePreference(self):
         with open(self.__fileName, 'w') as userFile:
             userFile.write(self.__name)

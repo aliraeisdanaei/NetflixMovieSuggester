@@ -34,9 +34,34 @@ def giveMovie():
         elif(option == '2'):
             giveMovie()
         elif(option == '3'):
+            scraper.reset()
             showMainMenu()
         else:
             print('\nInvalid input. Try again.\n')
+
+
+def createNewUser():
+    global crntUser
+
+    print('\n********Create New User********\n')
+
+    name = input('Enter Name: ')
+
+    minRunTm = input(
+        'Enter the MINIMUM RUN TIME for movies you would like to see: ')
+    maxRunTm = input(
+        'Enter the MAXIMUM RUN TIME for movies you would like to see: ')
+    minRlsYr = input(
+        'Enter the MINIMUM RELEASE YEAR for movies you would like to see: ')
+    maxRlsYr = input(
+        'Enter the MAXIMUM RELEASE YEAR for movies you would like to see: ')
+    rjtGen = input(
+        'Enter all genres you would not like to see seperated only by commas(no space): ')
+
+    crntUser = user.User.createUser(
+        name, minRunTm, maxRunTm, minRlsYr, maxRlsYr, rjtGen)
+    scraper.reset()
+    showMainMenu()
 
 
 def changeUser():
@@ -45,6 +70,12 @@ def changeUser():
     option = '0'
 
     userList = user.User.getAllUsers()
+
+    if(len(userList) == 0):
+        print('There are no users for you to choose from.')
+        print('You must create a user first. You will be redirected to do so.')
+        createNewUser()
+
     for i in range(len(userList)):
 
         with open(userList[i], 'r') as userFile:
@@ -66,6 +97,9 @@ def changeUser():
         crntUser.loadUserPref(userList[int(option) - 1])
         print('\nCurrent User Name has been changed to {}.\n'.format(
             crntUser.getName()))
+
+        # the scraper needs to be reset so that movies show up based on the new user's preferances
+        scraper.reset()
         showMainMenu()
 
 
@@ -79,7 +113,8 @@ def showMainMenu():
     print('(1) Sugggest Movie')
     print('(2) Change Users')
     print('(3) View & Change Preferances')
-    print('(4) Quit')
+    print('(4) Create New User')
+    print('(5) Quit')
 
     option = input("Enter Option: ")
     if(option == '1'):
@@ -90,6 +125,8 @@ def showMainMenu():
     elif(option == '3'):
         pass
     elif(option == '4'):
+        createNewUser()
+    elif(option == '5'):
         sys.exit()
     else:
         print('\nInvalid input. Try again.\n')
@@ -97,7 +134,7 @@ def showMainMenu():
 
 
 crntUser = user.User()
-crntUser.loadUserPref('users\Ali.txt')
+# crntUser.loadUserPref('users\Ali.txt')
 
 # the scraper needs to be created as a global variable
 scraper = netflixWebScraper.WebScraper()
