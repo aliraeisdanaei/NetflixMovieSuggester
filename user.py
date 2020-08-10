@@ -1,12 +1,13 @@
 import datetime
+import glob
 
 
 class User:
     def __init__(self):
         self.__name = "default"
-        self.__fileName = self.__name + '.txt'
+        self.__fileName = 'users\\' + self.__name + '.txt'
         self.__minRunTm = 0
-        self.__maxRunTm = 10
+        self.__maxRunTm = 1000
         self.__minRlsYr = 1890
         self.__maxRlsYr = datetime.datetime.now().year
         self.__rejectedGenres = []
@@ -38,7 +39,11 @@ class User:
             self.__minRlsYr = int(userFile.readline())
             self.__maxRlsYr = int(userFile.readline())
             self.__rejectedGenres = userFile.readline().split(',')
-            print(self.__rejectedGenres)
+            # print(self.__rejectedGenres)
+
+    @classmethod
+    def getAllUsers(cls) -> list:
+        return glob.glob('users/*.txt')
 
     def getName(self):
         return self.__name
