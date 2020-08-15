@@ -3,14 +3,26 @@ import glob
 
 
 class User:
+
+    # oldest film in existence, Roundhay Garden Scene 1888 (https://en.wikipedia.org/wiki/Roundhay_Garden_Scene)
+    OLDEST_RLSYR = 1888
+
+    # this is from the longest movie ever made, Logistics 2012 (https://en.wikipedia.org/wiki/Logistics_(film))
+    LONGEST_RUNTIME_POSSIBLE = 51420
+
     def __init__(self):
         self.__name = "default"
-        self.__fileName = 'users\\' + self.__name + '.txt'
-        self.__minRunTm = 0
-        self.__maxRunTm = 1000
-        self.__minRlsYr = 1890
+        self.__fileName = User.getFileNameByName(self.__name)
+        self.__minRunTm = 1
+        self.__maxRunTm = User.LONGEST_RUNTIME_POSSIBLE
+        self.__minRlsYr = User.OLDEST_RLSYR
         self.__maxRlsYr = datetime.datetime.now().year
         self.__rejectedGenres = []
+
+    @classmethod
+    def getFileNameByName(cls, name: str) -> str:
+        fileName = 'users/' + name + '.txt'
+        return fileName
 
     @classmethod
     def createUser(cls, name, minRunTm, maxRunTm, minRlsYr, maxRlsYr, rjtGenres):
@@ -43,6 +55,7 @@ class User:
             for genre in self.__rejectedGenres:
                 rejGenStr += genre + ','
             userFile.write(rejGenStr.rstrip(','))
+            print('the file has been updated')
 
     def loadUserPref(self, newFileName):
         with open(newFileName, 'r') as userFile:
@@ -56,8 +69,16 @@ class User:
             # print(self.__rejectedGenres)
 
     @classmethod
-    def getAllUsers(cls) -> list:
-        return glob.glob('users/*.txt')
+    def getAllUserNames(cls) -> list:
+        userList = glob.glob('users/*.txt')
+        userNameList = []
+
+        for user in userList:
+
+            with open(user, 'r') as userFile:
+                username = userFile.readline().replace('\n', '')
+            userNameList.append(username)
+        return userNameList
 
     def getName(self):
         return self.__name
@@ -74,29 +95,30 @@ class User:
     def getMaxRlsYr(self):
         return self.__maxRlsYr
 
-    def getRejGen(self):
+    def getRejGen(self) -> list:
         return self.__rejectedGenres
 
     def setName(self, name):
         self.__name = name
-        self.__savePreference
+        self.__fileName = str(User.getFileNameByName(self.__name))
+        self.__savePreference()
 
     def setMinRunTm(self, minRunTm):
         self.__minRunTm = minRunTm
-        self.__savePreference
+        self.__savePreference()
 
     def setMaxRunTm(self, maxRunTm):
         self.__maxRunTm = maxRunTm
-        self.__savePreference
+        self.__savePreference()
 
     def setMinRlsYr(self, minRlsYr):
         self.__minRlsYr = minRlsYr
-        self.__savePreference
+        self.__savePreference()
 
     def setMaxRlsYr(self, maxRlsYr):
         self.__maxRlsYr = maxRlsYr
-        self.__savePreference
+        self.__savePreference()
 
-    def setRejGen(self, rejectedGenres):
+    def setRejGen(self, rejectedGenres: list):
         self.__rejectedGenres = rejectedGenres
-        self.__savePreference
+        self.__savePreference()

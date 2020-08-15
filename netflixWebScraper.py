@@ -32,8 +32,8 @@ class WebScraper:
             runTime = movie.getRunTm()
             genre = movie.getGenre()
 
-            if (crntUser.getMinRlsYr() <= releaseYr and releaseYr <= crntUser.getMaxRlsYr()):
-                if (crntUser.getMinRunTm() <= runTime and runTime <= crntUser.getMaxRunTm()):
+            if (int(crntUser.getMinRlsYr()) <= releaseYr and releaseYr <= int(crntUser.getMaxRlsYr())):
+                if (int(crntUser.getMinRunTm()) <= runTime and runTime <= int(crntUser.getMaxRunTm())):
                     if (not(genre in crntUser.getRejGen())):
                         return movie
 
