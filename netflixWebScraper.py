@@ -17,7 +17,8 @@ class WebScraper:
         self.__movieList = soup.find(class_='luna-table__body').findAll('tr')
         #print(len(self.__movieList), 'movies were found.')
 
-        self.__movieListOg = self.__movieList
+        # making a copy to keep as original
+        self.__movieListOg = list(self.__movieList)
         random.shuffle(self.__movieList)
 
     def findNextMovie(self, crntUser):
@@ -38,7 +39,10 @@ class WebScraper:
                         return movie
 
     def reset(self):
-        self.__movieList = self.__movieListOg
+        print(len(self.__movieList), len(self.__movieListOg))
+
+        # copying the original
+        self.__movieList = list(self.__movieListOg)
         random.shuffle(self.__movieList)
 
     @classmethod

@@ -314,13 +314,14 @@ def view_change_Prefs():
 
 def showMainMenu():
     scraper.reset()
+
     print('\n****Netflix Movie Suggester****')
     print('***********Main Menu***********\n')
     print('Current User Name: ', crntUser.getName(), '\n')
 
     option = '0'
 
-    print('(1) Sugggest Movie')
+    print('(1) Suggest Movie')
     print('(2) Change Users')
     print('(3) View & Change Preferances')
     print('(4) Create New User')
