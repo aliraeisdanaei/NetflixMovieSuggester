@@ -55,7 +55,7 @@ class User:
             for genre in self.__rejectedGenres:
                 rejGenStr += genre + ','
             userFile.write(rejGenStr.rstrip(','))
-            print('the file has been updated')
+            # print('the file has been updated')
 
     def loadUserPref(self, newFileName):
         with open(newFileName, 'r') as userFile:

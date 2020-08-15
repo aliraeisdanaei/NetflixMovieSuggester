@@ -42,7 +42,6 @@ def giveMovie():
         elif(option == '2'):
             giveMovie()
         elif(option == '3'):
-            scraper.reset()
             showMainMenu()
         else:
             print('\nInvalid input. Try again.\n')
@@ -67,7 +66,6 @@ def createNewUser():
 
     crntUser = user.User.createUser(
         name, minRunTm, maxRunTm, minRlsYr, maxRlsYr, rjtGen)
-    scraper.reset()
     showMainMenu()
 
 
@@ -195,8 +193,6 @@ def changeUser():
             print('\nCurrent User Name has been changed to {}.\n'.format(
                 crntUser.getName()))
 
-            # the scraper needs to be reset so that movies show up based on the new user's preferances
-            scraper.reset()
             showMainMenu()
 
 
@@ -272,8 +268,8 @@ def view_change_Prefs():
 
     print('(1) Username: ' + str(crntUser.getName()))
     print('(2) Run Time:')
-    print('\t Min: ' + str(crntUser.getMinRunTm()) + 'mins')
-    print('\t Max: ' + str(crntUser.getMaxRunTm()) + 'mins')
+    print('\t Min: ' + str(crntUser.getMinRunTm()) + ' mins')
+    print('\t Max: ' + str(crntUser.getMaxRunTm()) + ' mins')
     print('(3) Release Year:')
     print('\t Min: ' + str(crntUser.getMinRlsYr()))
     print('\t Max: ' + str(crntUser.getMaxRlsYr()))
@@ -285,7 +281,6 @@ def view_change_Prefs():
     option = input('Enter Option: ')
 
     if(option == '5'):
-        scraper.reset()
         showMainMenu()
     if(not (crntUser.getName() in user.User.getAllUserNames())):
         print('You must create a user first.')
@@ -314,11 +309,11 @@ def view_change_Prefs():
     else:
         view_change_Prefs()
 
-    scraper.reset()
     view_change_Prefs()
 
 
 def showMainMenu():
+    scraper.reset()
     print('\n****Netflix Movie Suggester****')
     print('***********Main Menu***********\n')
     print('Current User Name: ', crntUser.getName(), '\n')
@@ -352,7 +347,6 @@ def showMainMenu():
 
 
 crntUser = user.User()
-# crntUser.loadUserPref('users\Ali.txt')
 
 # the scraper needs to be created as a global variable
 scraper = netflixWebScraper.WebScraper()
