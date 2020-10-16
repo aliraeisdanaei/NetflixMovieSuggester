@@ -28,7 +28,7 @@ class User:
     def createUser(cls, name, minRunTm, maxRunTm, minRlsYr, maxRlsYr, rjtGenres):
         tmpUser = cls()
         tmpUser.__name = name
-        tmpUser.__fileName = 'users\\' + tmpUser.__name + '.txt'
+        tmpUser.__fileName = 'users/' + tmpUser.__name + '.txt'
         tmpUser.__minRunTm = minRunTm
         tmpUser.__maxRunTm = maxRunTm
         tmpUser.__minRlsYr = minRlsYr
