@@ -47,15 +47,14 @@ class WebScraper:
 
     @classmethod
     def getMovieFromCode(cls, movieCode) -> movie.Movie:
+        all_td = movieCode.findAll("td")
         # All of the movie titles are in <b> tags
-        title = movieCode.find('b').get_text()
-        rlsyr = int(movieCode.find(
-            'td', {"data-title": "Year of release"}).get_text())
-        runTime = int(movieCode.find(
-            'td', {"data-title": "Runtime (mins)"}).get_text())
-        genre = movieCode.find(
-            'td', {"data-title": "Genres"}).get_text()
+        title = all_td[0].get_text()
+        rlsyr = int(all_td[1].get_text())
+        runTime = int(all_td[2].get_text())
+        genre = all_td[3].get_text()
         # the link on the website is routed through itself, it needs to be split
-        link = movieCode.find('a')['href'].split('=')[1]
+        # link = movieCode.find('a')['href'].split('=')[1] # sadly the website no longer provides a link -- I have lazily depricated the link to this wikipedia article about the number 404
+        link = 'https://en.wikipedia.org/wiki/400_(number)#404'
 
         return movie.Movie(title, rlsyr, runTime, genre, link)
